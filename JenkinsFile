@@ -6,13 +6,22 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/csurqunix/OSDetector.git'
             }
         }
+        stage('Ajouter le dépôt Python 3.11') {
+            steps {
+                // Ajouter le PPA pour Python 3.11
+                sh '''
+                sudo apt-get update
+                sudo add-apt-repository ppa:deadsnakes/ppa -y
+                sudo apt-get update
+                '''
+            }
+        }
         stage('Installation de Python 3.11 et pip') {
             steps {
                 // Installation de Python 3.11 et pip
                 sh '''
-                $echo root | sudo -S apt-get update
-                $echo root | sudo -S apt-get install -y python3.11 python3.11-venv python3.11-dev
-                $echo root | sudo -S apt-get install -y python3-pip
+                sudo apt-get install -y python3.11 python3.11-venv python3.11-dev
+                sudo apt-get install -y python3-pip
                 python3.11 --version
                 pip3 --version
                 '''
@@ -22,7 +31,7 @@ pipeline {
             steps {
                 // Exécution du script Python depuis le dépôt
                 sh '''
-                python3.11 script.py
+                python3.11 os_detector.py
                 '''
             }
         }
