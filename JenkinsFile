@@ -10,9 +10,9 @@ pipeline {
             steps {
                 // Installation de Python 3.11 et pip
                 sh '''
-                apt-get update
-                apt-get install -y python3.11 python3.11-venv python3.11-dev
-                apt-get install -y python3-pip
+                $echo root | sudo -S apt-get update
+                $echo root | sudo -S apt-get install -y python3.11 python3.11-venv python3.11-dev
+                $echo root | sudo -S apt-get install -y python3-pip
                 python3.11 --version
                 pip3 --version
                 '''
